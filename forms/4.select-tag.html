@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+        
+        <script src="../js/react.development.js"></script>
+        <script src="../js/react-dom.development.js"></script>
+        <script src="../js/babel.js"></script>
+
+        <script type="text/babel">
+            const rootHandle = document.getElementById('root')
+
+            const { useState } = React
+            function UserLaptop(props) {
+                const [username,setUsername] = useState('')
+                const [laptop,setLaptop] = useState('')
+                const [submitted,setSubmitted] = useState(false)
+
+               const lappy = ['Hp','Apple','Acer','Samsung','Dell']
+
+                 
+
+                const handleUsernameChange = (e) => {
+                    const userInput = e.target.value
+                    setUsername(userInput)
+                }
+
+                const handleLaptopChange = (e) => {
+                    const userInput = e.target.value
+                    setLaptop(userInput)
+                }
+
+                const handleSubmit = (e) => {
+                    e.preventDefault()
+                    setSubmitted(!submitted)
+                }
+                return(
+                    <div>
+                        {submitted && <h2> {lappy} </h2>}
+
+                    <form onSubmit={handleSubmit}>
+
+                        <label> username </label><br/>
+                        <input type='text' value={username} onChange={handleUsernameChange}/><br/>
+
+                        <label> laptop </label> <br/>
+                        <select  onload={handleLaptopChange}>
+                            <option value=''> Select Brand </option>
+                            {/*
+                                <option value='HP'> HP </option>
+                                <option value='Apple'> Apple </option>
+                                <option value='Acer'> Acer </option>
+                                <option value='Samsung'> Samsung </option>
+                                <option value='Dell'> Dell </option>
+                            */}
+                                
+                            {lappy.map((ele,i) => {
+                                return <option key={i} value={ele}> {ele} </option>
+                            })}
+                            
+                        </select><br/>
+
+                        <input type='submit'/>
+                    </form>
+                </div>
+                )
+            }
+
+            ReactDOM.render(<UserLaptop/>, rootHandle)
+        </script>
+    </body>
+</html>

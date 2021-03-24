@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+        
+        <script src="../js/react.development.js"></script>
+        <script src="../js/react-dom.development.js"></script>
+        <script src="../js/babel.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+        <script type="text/babel">
+            const rootHandle = document.getElementById('root')
+            const url = 'https://jsonplaceholder.typicode.com/users/1'
+
+            const { useState,useEffect } = React
+            function UsersTable(props) {
+                const [info,setinfo] = useState([])
+                console.log(info)
+
+                useEffect(()=> {
+                    axios.get(url)
+                    .then((response) => {
+                        const result = response.data
+                        console.log(response.data)
+                        setinfo(result)
+                    })
+                },[])
+                    let city
+                    const { name,email,address } = info
+                    for(const k in address){
+                    city=info.address['city']
+                    }
+
+                    return(
+                    <div>
+                        <h2>{name} - {email} - {city}</h2>
+                    </div>
+                    )                   
+                }
+            ReactDOM.render(<UsersTable/>,rootHandle)
+        </script>
+    </body>
+</html>
+

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+        
+        <script src="../js/react.development.js"></script>
+        <script src="../js/react-dom.development.js"></script>
+        <script src="../js/babel.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+        <script type="text/babel">
+            const rootHandle = document.getElementById('root')
+            const url = 'https://jsonplaceholder.typicode.com/users'
+
+            const { useState,useEffect } = React
+            function UsersTable(props) {
+                const [info,setinfo] = useState([])
+
+                useEffect(()=> {
+                    axios.get(url)
+                    .then((response) => {
+                        const result = response.data
+                        console.log(response.data)
+                        setinfo(result)
+                    })
+                },[])
+
+                return(
+                    <div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>City</th>
+                                    <th>Position</th>
+                                </tr>    
+                            </thead>
+                            <tbody>
+                               {info.map((ele,i)=> {
+                                   return <tr key={i}>
+                                    <td>{ele.id}</td>
+                                    <td>{ele.name}</td>
+                                    <td>{ele.email}</td>
+                                    <td>{ele.address.city}</td>
+                                    <td>{ele.address.geo.lat},{ele.address.geo.lng}</td>
+                                    </tr>
+                               })}
+                            </tbody>
+                        </table>
+                    </div>
+                )
+            }
+            ReactDOM.render(<UsersTable/>,rootHandle)
+        </script>
+    </body>
+</html>

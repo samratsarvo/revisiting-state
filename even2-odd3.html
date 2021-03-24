@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+        
+        <script src="js/react.development.js"></script>
+        <script src="js/react-dom.development.js"></script>
+        <script src="js/babel.js"></script>
+
+        <script type="text/babel">
+            const rootHandle = document.getElementById('root')
+
+            const { useState } = React
+
+            function OddEven (props) {
+                const [oddEven,setOddEven] = useState([10,15,20,25,30])
+
+                const add = () => {
+                    const result = oddEven.map((ele) => {
+                        if(ele%2===0){
+                            return ele+2
+                        }else{
+                            return ele+3
+                        }
+                    })
+                setOddEven(result)    
+                }
+
+                return (
+                    <div>
+                    <ul>   
+                    {oddEven.map((ele,i)=> {
+                        return <li key={i}> {ele} </li>
+                    })}
+                    </ul>
+                    <button onClick={add}> add </button>
+                    </div>
+                )
+            } 
+
+            ReactDOM.render(<OddEven/>, rootHandle)
+
+        </script>
+    </body>
+</html>

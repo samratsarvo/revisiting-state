@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+        
+        <script src="../js/react.development.js"></script>
+        <script src="../js/react-dom.development.js"></script>
+        <script src="../js/babel.js"></script>
+
+        <script type="text/babel">
+            const rootHandle = document.getElementById('root')
+
+            const { useState } = React
+
+            function SearchBox(props){
+                const [username,setUsername] = useState('')
+                const [bio,setBio] = useState('')
+
+                const handleUsernameChange = (e) => {
+                    const result = e.target.value
+                    setUsername(result)
+                }
+
+                const handleBioChange = (e) => {
+                    const result = e.target.value
+                    setBio(result)
+                }
+                return(
+                    <div>
+                        <h1>{username}</h1>
+                        <p>{bio}</p>
+                    <form>
+                    <label>username</label><br/>
+                    <input type='text' value={username} onChange={handleUsernameChange}/><br/>
+                    <label>bio</label><br/>
+                    <textarea value={bio} onChange={handleBioChange}></textarea>
+                    </form>
+                    </div>
+                )
+            }
+
+            ReactDOM.render(<SearchBox/>, rootHandle)
+        </script>
+    </body>
+</html>

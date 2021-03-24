@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+        
+        <script src="../js/react.development.js"></script>
+        <script src="../js/react-dom.development.js"></script>
+        <script src="../js/babel.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+        <script type="text/babel">
+            const rootHandle = document.getElementById('root')
+            const url = 'https://jsonplaceholder.typicode.com/users'
+
+            const { useState,useEffect } = React
+            function UsersTable(props) {
+                const [info,setinfo] = useState([])
+                const [information,setInformation] = useState('select the user')
+                useEffect(()=> {
+                    axios.get(url)
+                    .then((response) => {
+                        const result = response.data
+                        setinfo(result)
+                    })
+                },[])
+
+                const handleUserChange = (e) => {
+                    const result = e.target.value
+                    console.log(result)
+                    setInformation(result)
+                }
+
+                return(
+                    <div>
+                        <form>
+                        <label>Users</label>
+                        <select value={information} onChange={handleUserChange}>
+                            <option value='select any user'>--select user--</option>
+                                {info.map((ele,i)=> {
+                                    return <option key={i} value={`${ele.name} - ${ele.email} - ${ele.address.city}`}> {ele.name} </option>
+                                })} 
+                        </select> <br/>
+                        <h2>{information}</h2>
+                        </form>
+                    </div>
+                )
+            }
+            ReactDOM.render(<UsersTable/>,rootHandle)
+        </script>
+    </body>
+</html>

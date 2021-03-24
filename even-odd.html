@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+        
+        <script src="js/react.development.js"></script>
+        <script src="js/react-dom.development.js"></script>
+        <script src="js/babel.js"></script>
+
+        <script type="text/babel">
+            const rootHandle = document.getElementById('root')
+
+            const { useState } = React
+
+            function OddEven (props) {
+                const [oddEven,setOddEven] = useState(props.array)
+
+                const removeOdd = () => {
+                    const result = oddEven.filter((ele) => {
+                        if(ele%2==0){
+                            return ele
+                        }
+                    })
+                setOddEven(result)    
+                }
+
+                const removeEven = () => {
+                    const result = oddEven.filter((ele) => {
+                     if(ele%2!==0){
+                         return ele
+                     }
+                    })
+                setOddEven(result)
+                console.log(result)
+                }
+
+                const reset = () => {
+                    setOddEven(props.array)
+                }
+                console.log(Object.keys(props.array))
+                console.log(Object.values(props.array))
+                return (
+                    <div>
+                    <ul>   
+                    {oddEven.map((ele,i)=> {
+                        return <li key={i}> {ele} </li>
+                    })}
+                    </ul>
+                    <button onClick={removeEven}> Remove Even </button>
+                    <button onClick={removeOdd}> Remove Odd </button>
+                    <button onClick={reset}> reset </button>
+                    </div>
+                )
+            } 
+
+            ReactDOM.render(<OddEven array={[10,20,30,31,40,50]}/>, rootHandle)
+
+        </script>
+    </body>
+</html>
+
+<!-- does the array has key value pair in it...?? -->

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+        
+        <script src="js/react.development.js"></script>
+        <script src="js/react-dom.development.js"></script>
+        <script src="js/babel.js"></script>
+
+        <script type="text/babel">
+            const rootHandle = document.getElementById('root')
+
+            const { useState } = React
+
+            function EmployeeStats(props) {
+                const maleEmployees =  props.employees.filter((ele) => {
+                    return ele.gender==='male'
+                })
+                
+                const femaleEmployees =  props.employees.filter((ele) => {
+                    return ele.gender==='female'
+                })
+                return (
+                    <div>
+                        <h2>Employee Statistics</h2>
+                    <table>
+                    <thead>
+                            <tr>
+                                <th>Gender</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Male</td>
+                                <td>{maleEmployees.length}</td>
+                            </tr>
+                            <tr>        
+                                <td>Female</td>
+                                <td>{femaleEmployees.length}</td>
+                            </tr>
+                            </tbody>
+                    </table>
+                    </div>
+                )
+            }
+
+            function EmployeeList(props) {
+                console.log(props)
+            return (
+                <div>
+                     <h2>Listing Employees</h2>
+                    <ul>
+                    {props.employees.map((ele,i) => {
+                        return <li key={i}> {ele.name} 
+                            <button onClick={() => {
+                                props.removeEmployee(ele.id)
+                            }}>remove</button>
+                            </li>
+                    })}    
+                    </ul>
+                </div>
+            )
+            }
+
+            function EmployeeContainer(props) {
+                const [employees , setEmployees] = useState([
+                {id:1, name:'Employee 1', gender:'male'},
+                {id:2, name:'Employee 2', gender:'male'},
+                {id:3, name:'Employee 3', gender:'male'},
+                {id:4, name:'Employee 4', gender:'female'},
+                {id:5, name:'Employee 5', gender:'female'}
+            ])
+
+            const removeEmployee = (id) => {
+                const result = employees.filter((ele) => {
+                    return ele.id !==id
+                })
+                setEmployees(result)
+            }
+                
+                return (
+                    <div>
+                        <EmployeeList employees={employees} removeEmployee={removeEmployee}/>
+                        <EmployeeStats employees={employees}/>
+                    </div>
+                )
+            }
+
+            function TasksContainer(props){
+                return(
+                    <div>
+                        ----
+                    </div>
+                )
+            }
+
+            function App(){
+                return(
+                    <div>
+                        <EmployeeContainer/>
+                        <TasksContainer/>
+                    </div>
+                )
+            }
+
+            ReactDOM.render(<App/>,rootHandle)
+
+        </script>
+    </body>
+</html>
